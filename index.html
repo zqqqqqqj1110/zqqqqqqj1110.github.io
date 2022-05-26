@@ -64,6 +64,80 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-TPOSIS" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/05/26/TPOSIS/" class="article-date">
+  <time datetime="2022-05-26T14:28:26.000Z" itemprop="datePublished">2022-05-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/05/26/TPOSIS/">TPOSIS</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>（逼近理想解排序法）</p>
+<h2 id="构建计算评分公式："><a href="#构建计算评分公式：" class="headerlink" title="构建计算评分公式："></a>构建计算评分公式：</h2><p>$$<br>{x-max \over max-min}<br>$$</p>
+<h2 id="统一模型："><a href="#统一模型：" class="headerlink" title="统一模型："></a>统一模型：</h2><p>指标正向化</p>
+<ol>
+<li><p>极小值转为极大值：                               max - x</p>
+</li>
+<li><p>中间值转为最大值:</p>
+</li>
+</ol>
+<p>$$<br>M = max{|x_i - x_{best}|, |x_i - x_{best}|,|x_i - x_{best}|}<br>$$</p>
+<p>$$<br>x_i = 1- {|x_i - x_{best}| \over M}<br>$$</p>
+<ol start="3">
+<li>区间性指标：</li>
+</ol>
+<h2 id="标准化处理"><a href="#标准化处理" class="headerlink" title="标准化处理"></a>标准化处理</h2><table>
+<thead>
+<tr>
+<th>89</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>60</td>
+<td>0</td>
+</tr>
+<tr>
+<td>74</td>
+<td>0</td>
+</tr>
+<tr>
+<td>99</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>$$<br>x_i = {89 \over \sqrt{89^2 + 60^2 +74^2 + 99^2}}<br>$$</p>
+<h2 id="计算得分"><a href="#计算得分" class="headerlink" title="计算得分"></a>计算得分</h2><p>（归一化）<br>$$<br>(x与最小值的距离) \over (x与最大值的距离) + (x与最小值的距离)<br>$$</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/26/TPOSIS/" data-id="cl3n7ywv300009stqab9p9380" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" rel="tag">数学建模</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-层次分析法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/" class="article-date">
@@ -133,11 +207,11 @@
 <li><p>标准流程：</p>
 </li>
 </ol>
-<p><img src="/.com//05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/p2-16535740735613.png"></p>
+<p><img src="/.com//p2-16535740735613.png"></p>
 <h2 id="层次结构图（必画）"><a href="#层次结构图（必画）" class="headerlink" title="层次结构图（必画）"></a>层次结构图（必画）</h2><ol>
 <li>SmartArt（ppt自带）</li>
 <li>艺图图示</li>
-<li><img src="/.com//05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/p1-16535740622971.png"></li>
+<li><img src="/.com//p1-16535740622971.png"></li>
 </ol>
 <h2 id="局限："><a href="#局限：" class="headerlink" title="局限："></a>局限：</h2><ol>
 <li><p>决策层不能太多（n越大，判断矩阵和一致矩阵差距越大）</p>
@@ -149,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/" data-id="cl3n3c9l10002d0tq8zgzg66b" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/" data-id="cl3n7ywva00039stq5g0oga47" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" rel="tag">数学建模</a></li></ul>
@@ -236,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/17/md%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" data-id="cl3n3c9kv0001d0tq2n515v8c" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/17/md%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" data-id="cl3n7ywvb00049stq9lhp9lr1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -285,7 +359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/17/hello-world/" data-id="cl3n3c9ks0000d0tqdtk2bnmq" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/17/hello-world/" data-id="cl3n7ywv700019stqeb4796zo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -338,6 +412,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/05/26/TPOSIS/">TPOSIS</a>
+          </li>
         
           <li>
             <a href="/2022/05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/">层次分析法</a>

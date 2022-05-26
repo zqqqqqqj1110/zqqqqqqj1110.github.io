@@ -5,14 +5,19 @@
   
 
   
-  <title>Archives: 2022 | Hexo</title>
+  <title>TPOSIS | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2022/index.html">
+  <meta name="description" content="（逼近理想解排序法） 构建计算评分公式：$${x-max \over max-min}$$ 统一模型：指标正向化  极小值转为极大值：                               max - x  中间值转为最大值:   $$M &#x3D; max{|x_i - x_{best}|, |x_i - x_{best}|,|x_i - x_{best}|}$$ $$x_i &#x3D; 1- {|x_i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TPOSIS">
+<meta property="og:url" content="http://example.com/2022/05/26/TPOSIS/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="（逼近理想解排序法） 构建计算评分公式：$${x-max \over max-min}$$ 统一模型：指标正向化  极小值转为极大值：                               max - x  中间值转为最大值:   $$M &#x3D; max{|x_i - x_{best}|, |x_i - x_{best}|,|x_i - x_{best}|}$$ $$x_i &#x3D; 1- {|x_i">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-26T14:28:26.000Z">
+<meta property="article:modified_time" content="2022-05-26T16:17:36.917Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数学建模">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -62,97 +67,89 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/05/26/TPOSIS/" class="archive-article-date">
-  <time datetime="2022-05-26T14:28:26.000Z" itemprop="datePublished">May 26</time>
+        <section id="main"><article id="post-TPOSIS" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/05/26/TPOSIS/" class="article-date">
+  <time datetime="2022-05-26T14:28:26.000Z" itemprop="datePublished">2022-05-26</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/26/TPOSIS/">TPOSIS</a>
+    <h1 class="article-title" itemprop="name">
+      TPOSIS
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/" class="archive-article-date">
-  <time datetime="2022-05-26T13:45:58.000Z" itemprop="datePublished">May 26</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/">层次分析法</a>
-    </h1>
-  
+        <p>（逼近理想解排序法）</p>
+<h2 id="构建计算评分公式："><a href="#构建计算评分公式：" class="headerlink" title="构建计算评分公式："></a>构建计算评分公式：</h2><p>$$<br>{x-max \over max-min}<br>$$</p>
+<h2 id="统一模型："><a href="#统一模型：" class="headerlink" title="统一模型："></a>统一模型：</h2><p>指标正向化</p>
+<ol>
+<li><p>极小值转为极大值：                               max - x</p>
+</li>
+<li><p>中间值转为最大值:</p>
+</li>
+</ol>
+<p>$$<br>M = max{|x_i - x_{best}|, |x_i - x_{best}|,|x_i - x_{best}|}<br>$$</p>
+<p>$$<br>x_i = 1- {|x_i - x_{best}| \over M}<br>$$</p>
+<ol start="3">
+<li>区间性指标：</li>
+</ol>
+<h2 id="标准化处理"><a href="#标准化处理" class="headerlink" title="标准化处理"></a>标准化处理</h2><table>
+<thead>
+<tr>
+<th>89</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>60</td>
+<td>0</td>
+</tr>
+<tr>
+<td>74</td>
+<td>0</td>
+</tr>
+<tr>
+<td>99</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>$$<br>x_i = {89 \over \sqrt{89^2 + 60^2 +74^2 + 99^2}}<br>$$</p>
+<h2 id="计算得分"><a href="#计算得分" class="headerlink" title="计算得分"></a>计算得分</h2><p>（归一化）<br>$$<br>(x与最小值的距离) \over (x与最大值的距离) + (x与最小值的距离)<br>$$</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/05/17/md%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  <time datetime="2022-05-17T14:57:48.000Z" itemprop="datePublished">May 17</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/17/md%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">md的使用方法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/05/17/hello-world/" class="archive-article-date">
-  <time datetime="2022-05-17T09:10:30.137Z" itemprop="datePublished">May 17</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/26/TPOSIS/" data-id="cl3n7ywv300009stqab9p9380" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/05/17/hello-world/">Hello World</a>
-    </h1>
-  
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" rel="tag">数学建模</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2022/05/26/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">层次分析法</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         
