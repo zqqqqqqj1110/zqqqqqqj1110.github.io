@@ -1,11 +1,12 @@
 ---
 title: exe反编译（py）
-date: 2023-03-29 17:24:30
+date: 2023-03-29 17:24:30 +08:00
 tags:
   - 信安
+categories:
+  - 练手项目
+  - 信安
 ---
-
-# 反编译py的.exe程序
 
 不知道能不能兼容所有的exe（反正我的图片转手写实现不了）
 
@@ -13,25 +14,25 @@ tags:
 
 步骤一：下载pyinstxtractor.py，并放到要反编译的.exe同一个目录下，如下图所示：
 
-![图1](/images/exe%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%88py%EF%BC%89/%E5%9B%BE1.png)
+![](/wp-content/uploads/2023/09/%E5%9B%BE1-1024x548.png)
 
-接着在当前目录打开终端，输入` python pyinstxtractor.py 文件名.exe`
+接着在当前目录打开终端，输入`python pyinstxtractor.py 文件名.exe`
 
 正常结果如下：(图我盗的，差不多就这个意思)
 
-![](/images/exe%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%88py%EF%BC%89/%E5%9B%BE2.png)
+![](/wp-content/uploads/2023/09/%E5%9B%BE2.png)
 
 接下来会在当前目录中生成一个文件夹
 
 点进去文件夹，会看到几个带有.pyc的文件，需要的就是和你文件同名的pyc
 
-![](/images/exe%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%88py%EF%BC%89/%E5%9B%BE3.png)
+![](/wp-content/uploads/2023/09/%E5%9B%BE3-1024x572.png)
 
 ## pyc的含义：
 
-​对于Python编译器来说，PyCodeObject对象是其真正的编译结果，PyCodeObject对象保存在内存中。在程序运行结束时，会根据规则决定是否将PyCodeObject对象写回硬盘，如果写回硬盘，就会生成pyc文件，所以，pyc文件只是这个PyCodeObject对象在硬盘上的表现形式。
+对于Python编译器来说，PyCodeObject对象是其真正的编译结果，PyCodeObject对象保存在内存中。在程序运行结束时，会根据规则决定是否将PyCodeObject对象写回硬盘，如果写回硬盘，就会生成pyc文件，所以，pyc文件只是这个PyCodeObject对象在硬盘上的表现形式。
 
-​pyc文件是由.py文件经过编译后生成的字节码文件，其**加载速度相对于之前的.py文件有所提高**，而且还可以**实现源码隐藏**，以及**一定程度上的反编译**。因此，不同版本的python可能运行不了同一个pyc文件。
+pyc文件是由.py文件经过编译后生成的字节码文件，其**加载速度相对于之前的.py文件有所提高**，而且还可以**实现源码隐藏**，以及**一定程度上的反编译**。因此，不同版本的python可能运行不了同一个pyc文件。
 
 ## 将pyc文件转为.py
 
@@ -39,29 +40,17 @@ tags:
 
 - 在线转化
 
-​没啥好说的了，直接上链接，但是支持的python版本很低，貌似才到3.6
+没啥好说的了，直接上链接，但是支持的python版本很低，貌似才到3.6
 
-` https://tool.lu/pyc/`
+`https://tool.lu/pyc/` [转pyc网址](%5Bpython%E5%8F%8D%E7%BC%96%E8%AF%91%20-%20%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7%20(tool.lu)%5D(https://tool.lu/pyc/))
 
-\[转pyc网址\]([python反编译 - 在线工具 (tool.lu)](https://tool.lu/pyc/))
+- 利用uncompyle6环境：pycharm首先创建虚拟环境，接着用pip下载uncompyle6下载结束后，可以在终端中用这行代码查看是否下载成功`uncompyle6`成功后的截图如下所示：
 
-- 利用uncompyle6
-
-  环境：pycharm
-
-  首先创建虚拟环境，接着用pip下载uncompyle6
-
-  下载结束后，可以在终端中用这行代码查看是否下载成功
-
-  ` uncompyle6`
-
-  成功后的截图如下所示：
-
-  ![](/images/exe%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%88py%EF%BC%89/%E5%9B%BE4.png)
+![](/wp-content/uploads/2023/09/%E5%9B%BE4-1-1024x339.png)
 
 如果出现了如下图情况
 
-![](/images/exe%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%88py%EF%BC%89/%E5%9B%BE5.png)
+![](/wp-content/uploads/2023/09/%E5%9B%BE5-1024x109.png)
 
 那么恭喜你，出大问题拉！
 
@@ -74,7 +63,7 @@ tags:
 
 如下图所示：
 
-![图6](/images/exe%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%88py%EF%BC%89/%E5%9B%BE6.png)
+![](/wp-content/uploads/2023/09/%E5%9B%BE6-1024x548.png)
 
 ## 接下来，就是最后一步！
 
@@ -82,14 +71,12 @@ tags:
 
 tip：可以先创建txt文件，复制粘贴代码后将后缀改为.bat，名字可以自己随便取
 
-代码如下：
-
-    @echo off
-    C:          # 你的路径位置
-    cd C:\Users\Lenovo\Desktop\pyfan    # 你的主路径位置
-    set path=%~dp1
-    start uncompyle6.exe -o %path%\. %1
-    pause
+代码如下：@echo off  
+C: \# 你的路径位置  
+cd C:\Users\Lenovo\Desktop\pyfan \# 你的主路径位置  
+set path=%~dp1  
+start uncompyle6.exe -o %path%\\ %1  
+pause
 
 除了注释以外，其他可以不需要动（因为我自己也看不懂==）
 
@@ -99,9 +86,9 @@ win+R，输入`shell:SendTo`
 
 将bat文件放进去，如下图所示：
 
-![图7](/images/exe%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%88py%EF%BC%89/%E5%9B%BE7.png)
+![](/wp-content/uploads/2023/09/%E5%9B%BE7.png)
 
-![图8](/images/exe%E5%8F%8D%E7%BC%96%E8%AF%91%EF%BC%88py%EF%BC%89/%E5%9B%BE8.png)
+![](/wp-content/uploads/2023/09/%E5%9B%BE8-1024x548.png)
 
 ## 结束！接下来是演示成果
 
@@ -109,8 +96,8 @@ win+R，输入`shell:SendTo`
 
 \*图片懒的搞了，最后一步相信大家肯定能自己搞出来
 
-### 需要的东西都上传了。。。就当作是自己的第一次练习经历吧
+### 需要的东西都上传了。。。就当作是自己的第一次练习经历把
 
-我的GitHub：
+参考博客：[(40条消息) Python 反编译：pyinstxtractor工具和uncompyle6库的使用_小嗷犬的博客-CSDN博客](https://blog.csdn.net/qq_63585949/article/details/126706526)
 
-参考博客：\[(40条消息) Python 反编译：pyinstxtractor工具和uncompyle6库的使用_小嗷犬的博客-CSDN博客\]
+GitHub仓库地址：[zqqqqqqj1110/decompile_for_py: 基于pyinstxtractor和uncompylr6的反编译exe文件 (github.com)](https://github.com/zqqqqqqj1110/decompile_for_py)

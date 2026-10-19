@@ -12,6 +12,10 @@ leftbar:
       title: menu.blog
       icon: default:documents
       url: /
+    - id: categories
+      title: menu.categories
+      icon: default:category
+      url: /categories/
     - id: tags
       title: menu.tags
       icon: default:hashtag
@@ -24,3 +28,7 @@ leftbar:
       title: menu.about
       icon: default:profile
       url: /about/
+
+features:
+  math:
+    provider: mathjax
