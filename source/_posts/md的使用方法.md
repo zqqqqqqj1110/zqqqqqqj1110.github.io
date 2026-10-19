@@ -2,7 +2,9 @@
 title: md的使用方法
 date: 2022-05-17 22:57:48 +08:00
 categories:
-  - 杂项
+  - 工具与技巧
+tags:
+  - Markdown
 ---
 
 # 标题

@@ -1,6 +1,8 @@
 ---
 title: TPOSIS
 date: 2022-05-26 22:28:26 +08:00
+categories:
+  - 数学建模与竞赛
 tags:
   - 数学建模
 ---

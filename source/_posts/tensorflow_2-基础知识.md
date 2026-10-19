@@ -3,7 +3,9 @@ title: "tensorflow_2:基础知识"
 date: 2023-09-22 15:43:25 +08:00
 updated: 2023-09-22 16:53:21 +08:00
 categories:
-  - 机器学习
+  - 深度学习
+tags:
+  - TensorFlow
 ---
 
 # 数据类型

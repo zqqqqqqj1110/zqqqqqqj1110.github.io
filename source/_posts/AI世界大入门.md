@@ -2,7 +2,7 @@
 title: "AI世界大入门"
 date: 2025-10-27 13:09:53 +08:00
 categories:
-  - AI
+  - 深度学习
 ---
 
 ## introduction

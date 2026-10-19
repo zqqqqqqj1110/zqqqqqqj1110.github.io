@@ -3,7 +3,9 @@ title: "tensorflow_1:用anaconda搭建tensorflow-gpu环境"
 date: 2023-09-22 15:34:02 +08:00
 updated: 2023-09-22 16:53:26 +08:00
 categories:
-  - 机器学习
+  - 深度学习
+tags:
+  - TensorFlow
 ---
 
 ## anaconda下载

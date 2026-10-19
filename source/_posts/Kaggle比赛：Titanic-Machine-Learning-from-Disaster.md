@@ -3,7 +3,9 @@ title: "Kaggle比赛：Titanic - Machine Learning from Disaster"
 date: 2024-04-21 18:13:49 +08:00
 updated: 2024-08-19 14:27:42 +08:00
 categories:
-  - 练手项目
+  - 数学建模与竞赛
+tags:
+  - Kaggle
 ---
 
 # Kaggle比赛：Titanic - Machine Learning from Disaster

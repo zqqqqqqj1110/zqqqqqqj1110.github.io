@@ -2,7 +2,9 @@
 title: "CityLearn介绍与初步使用"
 date: 2025-10-24 23:58:26 +08:00
 categories:
-  - AI
+  - CityLearn与能源
+tags:
+  - CityLearn
 ---
 
 # CITYlearn介绍与初步使用

@@ -3,7 +3,9 @@ title: "tensorflow_4:合并，分割等基础操作"
 date: 2023-09-22 16:11:28 +08:00
 updated: 2023-09-22 16:53:07 +08:00
 categories:
-  - 机器学习
+  - 深度学习
+tags:
+  - TensorFlow
 ---
 
 ### **拼接**

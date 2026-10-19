@@ -3,7 +3,9 @@ title: "tensorflow_5:高级操作"
 date: 2023-09-22 16:21:49 +08:00
 updated: 2023-09-22 16:53:00 +08:00
 categories:
-  - 机器学习
+  - 深度学习
+tags:
+  - TensorFlow
 ---
 
 **常用， 但是稍复杂的功能函数**

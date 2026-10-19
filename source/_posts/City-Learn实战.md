@@ -2,7 +2,9 @@
 title: "City Learn实战"
 date: 2026-01-25 17:08:12 +08:00
 categories:
-  - AI
+  - CityLearn与能源
+tags:
+  - CityLearn
 ---
 
 # City Learn实战

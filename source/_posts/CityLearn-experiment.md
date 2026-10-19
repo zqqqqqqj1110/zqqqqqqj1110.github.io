@@ -2,7 +2,9 @@
 title: "CityLearn experiment"
 date: 2025-11-04 19:36:14 +08:00
 categories:
-  - AI
+  - CityLearn与能源
+tags:
+  - CityLearn
 ---
 
 代码路径：https://github.com/zqqqqqqj1110/CityLearn_exp.git

@@ -3,7 +3,9 @@ title: "DL之PINN"
 date: 2023-11-05 16:44:13 +08:00
 updated: 2023-11-05 23:03:01 +08:00
 categories:
-  - 机器学习
+  - 科学计算与PINN
+tags:
+  - PINN
 ---
 
 ## PINN是什么？

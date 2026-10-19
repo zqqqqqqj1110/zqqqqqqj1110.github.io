@@ -3,7 +3,9 @@ title: "GitHub基础操作"
 date: 2023-11-17 18:58:16 +08:00
 updated: 2023-11-17 18:59:13 +08:00
 categories:
-  - 杂项
+  - 工具与技巧
+tags:
+  - GitHub
 ---
 
 ## 初始化

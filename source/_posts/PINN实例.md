@@ -3,7 +3,9 @@ title: "PINN实例"
 date: 2023-11-05 22:59:22 +08:00
 updated: 2023-11-05 23:00:18 +08:00
 categories:
-  - 机器学习
+  - 科学计算与PINN
+tags:
+  - PINN
 ---
 
 ## 题目

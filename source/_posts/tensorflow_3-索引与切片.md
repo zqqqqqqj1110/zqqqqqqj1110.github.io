@@ -3,7 +3,9 @@ title: "tensorflow_3:索引与切片"
 date: 2023-09-22 16:00:32 +08:00
 updated: 2023-09-22 16:53:15 +08:00
 categories:
-  - 机器学习
+  - 深度学习
+tags:
+  - TensorFlow
 ---
 
 ### **1. 索引**
