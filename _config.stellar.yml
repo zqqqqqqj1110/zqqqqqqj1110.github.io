@@ -1,0 +1,26 @@
+# Stellar 主题配置：只写需要覆盖的项，完整默认值见 node_modules/hexo-theme-stellar/_config.yml
+leftbar:
+  brand:
+    ghuser: zqqqqqqj1110
+    image:
+      src: https://github.com/zqqqqqqj1110.png
+      variant: avatar
+    name: zqqqqqqj1110
+    tagline: 个人博客
+  menu:
+    - id: post
+      title: menu.blog
+      icon: default:documents
+      url: /
+    - id: tags
+      title: menu.tags
+      icon: default:hashtag
+      url: /tags/
+    - id: archives
+      title: menu.archives
+      icon: default:calendar
+      url: /archives/
+    - id: about
+      title: menu.about
+      icon: default:profile
+      url: /about/
