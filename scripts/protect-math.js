@@ -8,6 +8,10 @@
 
 const escapeHtml = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const token = i => `MATHPROTECT${i}END`;
+// Typora breaks lines on "\\" in $$ blocks; MathJax only does inside an environment.
+const block = m => /\\\\/.test(m) && !/\\begin\{/.test(m)
+  ? m.replace(/^\$\$([\s\S]*)\$\$$/, '$$$$\\begin{gathered}$1\\end{gathered}$$$$')
+  : m;
 
 hexo.extend.filter.register('before_post_render', data => {
   if (!data.content.includes('$')) return data;
@@ -28,7 +32,7 @@ hexo.extend.filter.register('after_post_render', data => {
   const saved = data._mathSaved;
   if (!saved || !saved.length) return data;
   data.content = data.content
-    .replace(new RegExp(`<p>${token('(\\d+)')}</p>`, 'g'), (_, i) => `<div class="has-jax">${escapeHtml(saved[i])}</div>`)
+    .replace(new RegExp(`<p>${token('(\\d+)')}</p>`, 'g'), (_, i) => `<div class="has-jax">${escapeHtml(block(saved[i]))}</div>`)
     .replace(new RegExp(token('(\\d+)'), 'g'), (_, i) => `<span class="has-jax">${escapeHtml(saved[i])}</span>`);
   delete data._mathSaved;
   return data;

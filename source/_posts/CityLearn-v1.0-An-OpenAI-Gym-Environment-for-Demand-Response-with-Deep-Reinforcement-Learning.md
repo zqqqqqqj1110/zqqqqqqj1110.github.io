@@ -31,14 +31,14 @@ CityLearn class：整合多个建筑，并继承自 OpenAI Gym 环境，使其�
 2. 研究者可直接将现有 Gym 智能体（如 DDPG、PPO、A3C 等）应用于建筑能耗控制。
 3. Gym 生态允许算法间的统一评测与可重现比较，就像 RL 研究中常见的 Atari 或 robotics 环境一样。
 ### 4. 流程图
-![](/wp-content/uploads/2025/10/17613777480983.jpg)
+![](/images/citylearn/17613777480983.jpg)
 
   
 **part1**
-1. 一个建筑对应一个agent，智能体通过Actor网络（output：动作``a``）和Critic(output：``q``)网络学习策略
-2. 输入为当前环境状态``s``，输出是控制动作``a``
-3. 训练时，agent接收反馈（奖励``r``，下一状态``s_{t+1}``）
-4. RL经典交互循环为：``(s, a, r, s_{t+1})``(state -> action -> reward -> next state)
+1. 一个建筑对应一个agent，智能体通过Actor网络（output：动作$a$）和Critic(output：$q$)网络学习策略
+2. 输入为当前环境状态$s$，输出是控制动作$a$
+3. 训练时，agent接收反馈（奖励$r$，下一状态$s_{t+1}$）
+4. RL经典交互循环为：$s, a, r, s_{t+1}$(state -> action -> reward -> next state)
 
 **part2**
 1. 电网向各建筑提供电能。

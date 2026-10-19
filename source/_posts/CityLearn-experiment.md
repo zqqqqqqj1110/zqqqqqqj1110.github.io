@@ -33,9 +33,9 @@ pip install citylearn   # 后续试验可以直接用这个下载
 
 如果是macOS，pip install的时候会发生如下报错：
 ```
-ERROR: Ignored the following versions that require a different python version: 2.3.0 Requires-Python &gt;=3.11; 2.3.1 Requires-Python &gt;=3.11; 2.3.2 Requires-Python &gt;=3.11; 2.3.3 Requires-Python &gt;=3.11; 2.3.4 Requires-Python &gt;=3.11
-ERROR: Could not find a version that satisfies the requirement openstudio&lt;=3.3.0 (from citylearn) (from versions: 3.5.0, 3.5.1, 3.6.0, 3.6.1, 3.7.0rc1, 3.7.0, 3.8.0, 3.9.0, 3.10.0rc5, 3.10.0)
-ERROR: No matching distribution found for openstudio&lt;=3.3.0
+ERROR: Ignored the following versions that require a different python version: 2.3.0 Requires-Python >=3.11; 2.3.1 Requires-Python >=3.11; 2.3.2 Requires-Python >=3.11; 2.3.3 Requires-Python >=3.11; 2.3.4 Requires-Python >=3.11
+ERROR: Could not find a version that satisfies the requirement openstudio<=3.3.0 (from citylearn) (from versions: 3.5.0, 3.5.1, 3.6.0, 3.6.1, 3.7.0rc1, 3.7.0, 3.8.0, 3.9.0, 3.10.0rc5, 3.10.0)
+ERROR: No matching distribution found for openstudio<=3.3.0
 ```
 这是因为OpenStudio 只支持 x86 架构，Apple Silicon (arm64) 下没有编译版本，跳过依赖，自己手动安装
 ```
@@ -56,32 +56,32 @@ from pathlib import Path
 import numpy as np
 
 # 加载 CityLearn 环境
-schema = Path(&#039;/root/CityLearn/data/datasets/citylearn_challenge_2021/schema.json&#039;)
+schema = Path('/root/CityLearn/data/datasets/citylearn_challenge_2021/schema.json')
 env = CityLearnEnv(schema=schema)
-print(&quot;✅ Env loaded successfully!&quot;)
+print("✅ Env loaded successfully!")
 
 # 重置环境（Gymnasium 风格）
 obs, info = env.reset()
 
 # 打印建筑数量与ID
-print(&quot;✅ Number of buildings:&quot;, len(env.buildings))
+print("✅ Number of buildings:", len(env.buildings))
 
 # 打印每栋建筑的观测长度
 obs_lens = [len(o) for o in obs]
-print(&quot;✅ Observation lengths per building:&quot;, obs_lens)
+print("✅ Observation lengths per building:", obs_lens)
 
 # 示例：查看第一个建筑的前5个特征
-print(&quot;✅ Sample observation (Building 1):&quot;, obs[0][:5])
+print("✅ Sample observation (Building 1):", obs[0][:5])
 
 # 如果要转换为矩阵，可以先对齐长度（取最短长度或补零）
 min_len = min(obs_lens)
 obs_array = np.array([o[:min_len] for o in obs])
-print(&quot;✅ Converted obs array shape:&quot;, obs_array.shape)
+print("✅ Converted obs array shape:", obs_array.shape)
 ```
 有五个✅就ok了，输出结果应该如下：
 ```
 (citylearnv2) root@autodl-container-491e4b9a34-9e5b11d5:~/CityLearn# python Untitled1.py
-Couldn&#039;t import dot_parser, loading of dot files will not be possible.
+Couldn't import dot_parser, loading of dot files will not be possible.
 ✅ Env loaded successfully!
 ✅ Number of buildings: 9
 ✅ Observation lengths per building: [28, 27, 26, 27, 28, 28, 27, 27, 27]
@@ -92,7 +92,7 @@ number of buildings 可以理解为agent的数量，每一个agent都是一个�
 Observation lengths per building是每个agent的特征数量，这些特征可以是
 当前电价，CO₂ 强度，当前时刻，设备能耗（DHW、TES、Battery） 等
 Sample observation把一栋建筑的特征编码成一个一维数组，具体含义取决于schema的配置（observations字段），如下所示：
-![](/wp-content/uploads/2025/11/17616169599159-scaled.jpg)
+![](/images/citylearn/17616169599159.jpg)
 Converted obs array shape是传入到模型的数组，是一个大整体，用于训练
 
 # Control task distribution
@@ -127,38 +127,38 @@ from citylearn.agents.sac import SAC
 from pathlib import Path
 
 def run(agent_class, schema, episodes=1, central_agent=True, save_dir=None, **kwargs):
-    print(f&quot;\n=== Running {agent_class.__name__} ===&quot;)
+    print(f"\n=== Running {agent_class.__name__} ===")
     env = CityLearnEnv(schema, central_agent=central_agent)
     agent = agent_class(env)
     agent.learn(episodes=episodes, deterministic_finish=True)
     results = env.evaluate()
     env.close()
-    print(f&quot;✅ {agent_class.__name__} finished.&quot;)
+    print(f"✅ {agent_class.__name__} finished.")
     if save_dir:
         Path(save_dir).mkdir(parents=True, exist_ok=True)
-        (Path(save_dir)/&quot;metrics.txt&quot;).write_text(str(results))
+        (Path(save_dir)/"metrics.txt").write_text(str(results))
     return results
 
 def main():
     # 使用本地数据集 schema
-    schema = &quot;data/datasets/citylearn_challenge_2023_phase_2_local_evaluation/schema.json&quot;
+    schema = "data/datasets/citylearn_challenge_2023_phase_2_local_evaluation/schema.json"
 
     # 1 Baseline 无控制
-    res_base = run(BaselineAgent, schema, episodes=1, central_agent=True, save_dir=&quot;results/4_1_1_baseline&quot;)
+    res_base = run(BaselineAgent, schema, episodes=1, central_agent=True, save_dir="results/4_1_1_baseline")
 
     # 2 RBC 规则控制
-    res_rbc = run(BasicRBC, schema, episodes=1, central_agent=True, save_dir=&quot;results/4_1_1_rbc&quot;)
+    res_rbc = run(BasicRBC, schema, episodes=1, central_agent=True, save_dir="results/4_1_1_rbc")
 
     # 3 SAC 强化学习控制
-    res_sac = run(SAC, schema, episodes=5, central_agent=False, save_dir=&quot;results/4_1_1_sac&quot;)
+    res_sac = run(SAC, schema, episodes=5, central_agent=False, save_dir="results/4_1_1_sac")
 
     # 输出对比结果
-    print(&quot;\n=== Comparison ===&quot;)
-    print(&quot;Baseline:&quot;, res_base)
-    print(&quot;RBC:&quot;, res_rbc)
-    print(&quot;SAC:&quot;, res_sac)
+    print("\n=== Comparison ===")
+    print("Baseline:", res_base)
+    print("RBC:", res_rbc)
+    print("SAC:", res_sac)
 
-if __name__ == &quot;__main__&quot;:
+if __name__ == "__main__":
     main()
 ```
 目的是在相同环境下，依次运行三种控制策略（Baseline → RBC → SAC），并保存结果。主体是run函数，就详细讲他了
@@ -222,12 +222,12 @@ class MyRBC(BaseAgent):
     def select_actions(self, observations):
         actions = []
         for obs in observations:
-            price = obs[&#039;electricity_price&#039;]
-            soc = obs[&#039;storage_soc&#039;]
-            solar = obs[&#039;solar_generation&#039;]
-            if price &lt; 0.05 and solar &gt; 0:
+            price = obs['electricity_price']
+            soc = obs['storage_soc']
+            solar = obs['solar_generation']
+            if price < 0.05 and solar > 0:
                 action = 1.0      # 加强充电
-            elif price &gt; 0.2 or soc &gt; 0.8:
+            elif price > 0.2 or soc > 0.8:
                 action = -1.0     # 放电
             else:
                 action = 0.0
@@ -247,7 +247,7 @@ from stable_baselines3 import PPO
 class PPOAgent(BaseAgent):
     def __init__(self, env):
         super().__init__(env)
-        self.model = PPO(&#039;MlpPolicy&#039;, env, verbose=1)
+        self.model = PPO('MlpPolicy', env, verbose=1)
 
     def learn(self, episodes=1, **kwargs):
         self.model.learn(total_timesteps=episodes * len(self.env.time_steps))
@@ -261,12 +261,12 @@ run(PPOAgent, schema, episodes=5, central_agent=False)
 
 ps：schema文件中reward_function配置（具体在2.2中解释）
 ```
-&quot;reward_function&quot;: {
-  &quot;type&quot;: &quot;citylearn.reward_function.RewardFunction&quot;,
-  &quot;attributes&quot;: {
-    &quot;electricity_cost_weight&quot;: 0.6,
-    &quot;emission_weight&quot;: 0.4,
-    &quot;peak_to_average_ratio_weight&quot;: 0.0
+"reward_function": {
+  "type": "citylearn.reward_function.RewardFunction",
+  "attributes": {
+    "electricity_cost_weight": 0.6,
+    "emission_weight": 0.4,
+    "peak_to_average_ratio_weight": 0.0
   }
 }
 ```
@@ -281,12 +281,12 @@ SAC 自动学会错峰操作——让各建筑在不同时间放电。
 
 而在 CityLearn 环境中，KPI 由 reward_function 控制。所以要把 4.1.1 的“cost / emission minimization” 改成 4.1.2 的“peak reduction”，只需在 schema.json 里修改 reward 配置即可。
 ```
-&quot;reward_function&quot;: {
-  &quot;type&quot;: &quot;citylearn.reward_function.RewardFunction&quot;,
-  &quot;attributes&quot;: {
-    &quot;electricity_cost_weight&quot;: 0.0,
-    &quot;emission_weight&quot;: 0.0,
-    &quot;peak_to_average_ratio_weight&quot;: 1.0
+"reward_function": {
+  "type": "citylearn.reward_function.RewardFunction",
+  "attributes": {
+    "electricity_cost_weight": 0.0,
+    "emission_weight": 0.0,
+    "peak_to_average_ratio_weight": 1.0
   }
 }
 
@@ -298,14 +298,14 @@ KPI为在节能的同时维持舒适度（供暖、热水温度等）
 
 ## 3.1 代码
 ```
-&quot;reward_function&quot;: {
-  &quot;type&quot;: &quot;citylearn.reward_function.ComfortReward&quot;,
-  &quot;attributes&quot;: {
-    &quot;band&quot;: 1.0,
-    &quot;lower_exponent&quot;: 2.0,
-    &quot;higher_exponent&quot;: 3.0,
-    &quot;m&quot;: 3.0,
-    &quot;mode&quot;: &quot;cooling&quot;
+"reward_function": {
+  "type": "citylearn.reward_function.ComfortReward",
+  "attributes": {
+    "band": 1.0,
+    "lower_exponent": 2.0,
+    "higher_exponent": 3.0,
+    "m": 3.0,
+    "mode": "cooling"
   }
 }
 ```
@@ -363,7 +363,7 @@ from debug_sac import DebugSAC  # ✅ 使用调试版本，不改库
 
 # 测试用，仅使用n栋buildings
 def run(agent_class, schema, episodes=1, central_agent=False, save_dir=None):
-    print(f&quot;\n=== Running {agent_class.__name__} | Central Agent = {central_agent} ===&quot;)
+    print(f"\n=== Running {agent_class.__name__} | Central Agent = {central_agent} ===")
 
     # ✅ 正确选择前三栋建筑
     env_full = CityLearnEnv(schema, central_agent=central_agent)
@@ -380,18 +380,18 @@ def run(agent_class, schema, episodes=1, central_agent=False, save_dir=None):
     results = env.evaluate()
     env.close()
 
-    print(f&quot;✅ {agent_class.__name__} finished.&quot;)
-    print(f&quot;? Results: {results}&quot;)
+    print(f"✅ {agent_class.__name__} finished.")
+    print(f"📊 Results: {results}")
 
     if save_dir:
         Path(save_dir).mkdir(parents=True, exist_ok=True)
-        (Path(save_dir) / &quot;metrics.txt&quot;).write_text(str(results))
+        (Path(save_dir) / "metrics.txt").write_text(str(results))
 
     return results
 
 
 # def run(agent_class, schema, episodes=1, central_agent=False, save_dir=None):
-#     print(f&quot;\n=== Running {agent_class.__name__} | Central Agent = {central_agent} ===&quot;)
+#     print(f"\n=== Running {agent_class.__name__} | Central Agent = {central_agent} ===")
 
 #     # ✅ 创建环境
 #     env = CityLearnEnv(schema, buildings=env.buildings[:3], central_agent=False)
@@ -408,18 +408,18 @@ def run(agent_class, schema, episodes=1, central_agent=False, save_dir=None):
 #     results = env.evaluate()
 #     env.close()
 
-#     print(f&quot;✅ {agent_class.__name__} finished.&quot;)
-#     print(f&quot;? Results: {results}&quot;)
+#     print(f"✅ {agent_class.__name__} finished.")
+#     print(f"📊 Results: {results}")
 
 #     # ✅ 保存结果
 #     if save_dir:
 #         Path(save_dir).mkdir(parents=True, exist_ok=True)
-#         (Path(save_dir) / &quot;metrics.txt&quot;).write_text(str(results))
+#         (Path(save_dir) / "metrics.txt").write_text(str(results))
 
 #     return results
 
 def main():
-    schema = &quot;data/datasets/ca_alameda_county_neighborhood/schema.json&quot;
+    schema = "data/datasets/ca_alameda_county_neighborhood/schema.json"
     central_agent = False  
 
     # Baseline
@@ -428,7 +428,7 @@ def main():
         schema=schema,
         episodes=1,
         central_agent=central_agent,
-        save_dir=&quot;results/4_2_baseline_CA&quot;
+        save_dir="results/4_2_baseline_CA"
     )
 
     # RBC
@@ -437,7 +437,7 @@ def main():
         schema=schema,
         episodes=1,
         central_agent=central_agent,
-        save_dir=&quot;results/4_2_rbc_CA&quot;
+        save_dir="results/4_2_rbc_CA"
     )
 
     # SAC
@@ -446,10 +446,10 @@ def main():
         schema=schema,
         episodes=5,
         central_agent=central_agent,
-        save_dir=&quot;results/4_2_sac_CA&quot;
+        save_dir="results/4_2_sac_CA"
     )
 
-if __name__ == &quot;__main__&quot;:
+if __name__ == "__main__":
     main()
 
 ```
@@ -471,12 +471,12 @@ CityLearn 在 building.py 里写了安全检查,类型如下
 查找并修改：
 ```
 # before
-assert self.power_outage or demand &lt;= max_device_output or abs(demand - max_device_output) &lt; TOLERANCE, \
-    f&quot;demand is greater than heating_device max output | ...&quot;
+assert self.power_outage or demand <= max_device_output or abs(demand - max_device_output) < TOLERANCE, \
+    f"demand is greater than heating_device max output | ..."
 
 # now
-if not (self.power_outage or demand &lt;= max_device_output or abs(demand - max_device_output) &lt; TOLERANCE):
-    print(f&quot;[Warning] demand &gt; heating_device max output at timestep {self.time_step}&quot;)
+if not (self.power_outage or demand <= max_device_output or abs(demand - max_device_output) < TOLERANCE):
+    print(f"[Warning] demand > heating_device max output at timestep {self.time_step}")
 ```
 或者跑代码的时候直接python -O run_4_2.py（忽略所有 assert 语句）
 
@@ -489,21 +489,21 @@ TOLERANCE = 1e-4
 先看报错内容
 ```
 (citylearnv2) root@autodl-container-491e4b9a34-9e5b11d5:~/CityLearn# python -O run_4_2.py
-Couldn&#039;t import dot_parser, loading of dot files will not be possible.
+Couldn't import dot_parser, loading of dot files will not be possible.
 
 === Running SAC ===
 Traceback (most recent call last):
-  File &quot;/root/CityLearn/run_4_2.py&quot;, line 44, in &lt;module&gt;
+  File "/root/CityLearn/run_4_2.py", line 44, in <module>
     main()
-  File &quot;/root/CityLearn/run_4_2.py&quot;, line 40, in main
+  File "/root/CityLearn/run_4_2.py", line 40, in main
     run(SAC, schema, episodes=5, central_agent=central_agent,
-  File &quot;/root/CityLearn/run_4_2.py&quot;, line 16, in run
+  File "/root/CityLearn/run_4_2.py", line 16, in run
     agent.learn(episodes=episodes, deterministic_finish=True)
-  File &quot;/root/CityLearn/citylearn/agents/base.py&quot;, line 156, in learn
+  File "/root/CityLearn/citylearn/agents/base.py", line 156, in learn
     actions = self.predict(observations, deterministic=deterministic)
-  File &quot;/root/CityLearn/citylearn/agents/sac.py&quot;, line 189, in predict
+  File "/root/CityLearn/citylearn/agents/sac.py", line 189, in predict
     actions = self.get_post_exploration_prediction(observations, deterministic)
-  File &quot;/root/CityLearn/citylearn/agents/sac.py&quot;, line 206, in get_post_exploration_prediction
+  File "/root/CityLearn/citylearn/agents/sac.py", line 206, in get_post_exploration_prediction
     o = torch.FloatTensor(o).unsqueeze(0).to(self.device)
 TypeError: new(): data must be a sequence (got NoneType)
 ```
@@ -531,8 +531,8 @@ central_agent=False → 期望“每栋一个向量的列表”。
 import json, sys, argparse, os
 from typing import Any, Dict, List
 
-def load_schema(path: str) -&gt; Dict[str, Any]:
-    txt = open(path, &#039;r&#039;, encoding=&#039;utf-8&#039;).read()
+def load_schema(path: str) -> Dict[str, Any]:
+    txt = open(path, 'r', encoding='utf-8').read()
     # 先尝试 JSON
     try:
         data = json.loads(txt)
@@ -542,100 +542,100 @@ def load_schema(path: str) -&gt; Dict[str, Any]:
             import yaml  # pip install pyyaml
             data = yaml.safe_load(txt)
         except Exception as e:
-            print(f&quot;❌ 既不是 JSON 也不是可解析的 YAML：{e}&quot;)
+            print(f"❌ 既不是 JSON 也不是可解析的 YAML：{e}")
             sys.exit(1)
-    # 大多数 CityLearn schema 顶层有个 &#039;root&#039;
-    return data.get(&#039;root&#039;, data)
+    # 大多数 CityLearn schema 顶层有个 'root'
+    return data.get('root', data)
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument(&#039;--schema&#039;, required=True, help=&#039;path/to/schema.json&#039;)
+    ap.add_argument('--schema', required=True, help='path/to/schema.json')
     args = ap.parse_args()
 
     sc = load_schema(args.schema)
 
-    print(&quot;\n=== Top-level keys ===&quot;)
+    print("\n=== Top-level keys ===")
     print(list(sc.keys()))
 
-    # 1) central_agent &amp; sim period
-    print(&quot;\n=== Simulation/Agent ===&quot;)
-    print(&quot;central_agent:&quot;, sc.get(&#039;central_agent&#039;))
-    print(&quot;simulation_start_time_step:&quot;, sc.get(&#039;simulation_start_time_step&#039;))
-    print(&quot;simulation_end_time_step:&quot;, sc.get(&#039;simulation_end_time_step&#039;))
-    print(&quot;seconds_per_time_step:&quot;, sc.get(&#039;seconds_per_time_step&#039;))
+    # 1) central_agent & sim period
+    print("\n=== Simulation/Agent ===")
+    print("central_agent:", sc.get('central_agent'))
+    print("simulation_start_time_step:", sc.get('simulation_start_time_step'))
+    print("simulation_end_time_step:", sc.get('simulation_end_time_step'))
+    print("seconds_per_time_step:", sc.get('seconds_per_time_step'))
 
     # 2) observations（全局）
-    obs = sc.get(&#039;observations&#039;, {})
-    print(&quot;\n=== Global Observations ===&quot;)
+    obs = sc.get('observations', {})
+    print("\n=== Global Observations ===")
     if not obs:
-        print(&quot;⚠️  observations 是空的（这会导致 SAC 观测为 None）&quot;)
+        print("⚠️  observations 是空的（这会导致 SAC 观测为 None）")
     else:
-        actives = [k for k,v in obs.items() if isinstance(v, dict) and v.get(&#039;active&#039;, False)]
-        inactives = [k for k,v in obs.items() if isinstance(v, dict) and not v.get(&#039;active&#039;, False)]
-        print(&quot;active 数量:&quot;, len(actives))
-        print(&quot;active 列表(前20):&quot;, actives[:20])
+        actives = [k for k,v in obs.items() if isinstance(v, dict) and v.get('active', False)]
+        inactives = [k for k,v in obs.items() if isinstance(v, dict) and not v.get('active', False)]
+        print("active 数量:", len(actives))
+        print("active 列表(前20):", actives[:20])
         if inactives:
-            print(&quot;inactive 列表(前20):&quot;, inactives[:20])
+            print("inactive 列表(前20):", inactives[:20])
 
     # 3) buildings（字典或列表）
-    b = sc.get(&#039;buildings&#039;, {})
-    print(&quot;\n=== Buildings ===&quot;)
+    b = sc.get('buildings', {})
+    print("\n=== Buildings ===")
     if isinstance(b, dict):
         b_names = list(b.keys())
-        print(&quot;建筑数量:&quot;, len(b_names))
+        print("建筑数量:", len(b_names))
         sample = b_names[:5]
-        print(&quot;示例建筑:&quot;, sample)
+        print("示例建筑:", sample)
         # 检查 include / inactive_observations
         problem_buildings: List[str] = []
         fully_inactive: List[str] = []
         for name in b_names:
             cfg = b[name] or {}
-            include = cfg.get(&#039;include&#039;, True)
+            include = cfg.get('include', True)
             if not include:
                 problem_buildings.append(name)
-            inact = cfg.get(&#039;inactive_observations&#039;, [])
+            inact = cfg.get('inactive_observations', [])
             # 如果把全局 active 都屏蔽了，也会导致该建筑 obs=None
             try:
-                actives = [k for k,v in obs.items() if isinstance(v, dict) and v.get(&#039;active&#039;, False)]
-                if actives and isinstance(inact, list) and set(inact) &gt;= set(actives):
+                actives = [k for k,v in obs.items() if isinstance(v, dict) and v.get('active', False)]
+                if actives and isinstance(inact, list) and set(inact) >= set(actives):
                     fully_inactive.append(name)
             except Exception:
                 pass
         if problem_buildings:
-            print(f&quot;⚠️  有 {len(problem_buildings)} 栋建筑 include=false（可能导致 None）：&quot;, problem_buildings[:5])
+            print(f"⚠️  有 {len(problem_buildings)} 栋建筑 include=false（可能导致 None）：", problem_buildings[:5])
         if fully_inactive:
-            print(f&quot;⚠️  有 {len(fully_inactive)} 栋建筑把所有全局观测都屏蔽了：&quot;, fully_inactive[:5])
+            print(f"⚠️  有 {len(fully_inactive)} 栋建筑把所有全局观测都屏蔽了：", fully_inactive[:5])
     else:
-        print(&quot;⚠️  buildings 不是字典（请贴内容我再看）&quot;)
+        print("⚠️  buildings 不是字典（请贴内容我再看）")
 
     # 4) 快速“环境探针”（不训练，只 reset 看看 obs 形态）
     try:
         from citylearn.citylearn import CityLearnEnv
-        ca = sc.get(&#039;central_agent&#039;, False)
-        print(&quot;\n=== Env probe (reset) ===&quot;)
+        ca = sc.get('central_agent', False)
+        print("\n=== Env probe (reset) ===")
         env = CityLearnEnv(args.schema, central_agent=ca)
         obs0 = env.reset()
-        print(&quot;reset() 返回类型:&quot;, type(obs0))
+        print("reset() 返回类型:", type(obs0))
         if obs0 is None:
-            print(&quot;❌ reset() 返回 None —— SAC 会在 FloatTensor(None) 处报错。&quot;)
+            print("❌ reset() 返回 None —— SAC 会在 FloatTensor(None) 处报错。")
         else:
             try:
                 # centralized → 向量/数组；decentralized → list[数组]
                 if isinstance(obs0, list):
-                    shapes = [getattr(x, &#039;shape&#039;, None) for x in obs0]
-                    print(&quot;分布式观测数量:&quot;, len(obs0), &quot;示例形状:&quot;, shapes[:5])
+                    shapes = [getattr(x, 'shape', None) for x in obs0]
+                    print("分布式观测数量:", len(obs0), "示例形状:", shapes[:5])
                 else:
-                    print(&quot;集中式观测形状:&quot;, getattr(obs0, &#039;shape&#039;, None))
+                    print("集中式观测形状:", getattr(obs0, 'shape', None))
             except Exception:
                 pass
         env.close()
     except Exception as e:
-        print(&quot;（可选探针失败：）&quot;, e)
+        print("（可选探针失败：）", e)
 
-if __name__ == &#039;__main__&#039;:
+if __name__ == '__main__':
     main()
 ```
-![](/wp-content/uploads/2025/11/17622520053493-scaled.jpg)
+![](/images/citylearn/17622520053493.jpg)
 我的运行结果
 1. 进行调试
 从报错中可以知道，问题主要是出现在sac.py的self.get_post_exploration_prediction里，再建一个py文件重写该类，查看到底是哪一步出现了问题
@@ -645,7 +645,7 @@ import torch
 from citylearn.agents.sac import SAC
 
 class DebugSAC(SAC):
-    &quot;&quot;&quot;调试用 SAC：不改原库，但打印 observation &amp; None 来源&quot;&quot;&quot;
+    """调试用 SAC：不改原库，但打印 observation & None 来源"""
 
     def get_post_exploration_prediction(self, observations, deterministic=False):
 
@@ -657,30 +657,30 @@ class DebugSAC(SAC):
 
         for i, o in enumerate(observations):
             # ✅ Debug：打印原始 obs
-            print(f&quot;\n? [Debug] Building {i} raw obs = {o}&quot;)
+            print(f"\n🔍 [Debug] Building {i} raw obs = {o}")
 
             if o is None:
-                raise ValueError(f&quot;❌ Observation from agent {i} is None (raw environment output)&quot;)
+                raise ValueError(f"❌ Observation from agent {i} is None (raw environment output)")
 
             # ✅ 编码
             encoded = self.get_encoded_observations(i, o)
-            print(f&quot;   ➤ Encoded obs = {encoded}&quot;)
+            print(f"   ➤ Encoded obs = {encoded}")
 
             if encoded is None:
-                raise ValueError(f&quot;❌ get_encoded_observations() returned None for agent {i}&quot;)
+                raise ValueError(f"❌ get_encoded_observations() returned None for agent {i}")
 
             # ✅ 归一化
             normalized = self.get_normalized_observations(i, encoded)
-            print(f&quot;   ➤ Normalized obs = {normalized}&quot;)
+            print(f"   ➤ Normalized obs = {normalized}")
 
             if normalized is None:
-                raise ValueError(f&quot;❌ get_normalized_observations() returned None for agent {i}&quot;)
+                raise ValueError(f"❌ get_normalized_observations() returned None for agent {i}")
 
             # ✅ 尝试转成 tensor
             try:
                 o_tensor = torch.FloatTensor(normalized).unsqueeze(0).to(self.device)
             except Exception as e:
-                print(f&quot;❌ Failed to convert obs to tensor. Obs = {normalized}&quot;)
+                print(f"❌ Failed to convert obs to tensor. Obs = {normalized}")
                 raise e
 
             # ✅ 原来的 action 获取流程
@@ -704,7 +704,6 @@ citylearn的默认流程是这样的：
 归一化在SAC中还是需要的，不然会难以收敛或不稳定，而且不能修改schema里的数据（json里保存的都是真实原始数据）
 两种方法
 1. 在训练前自动收集数据，初始化 mean/std
-
 ```
 # 初始化 normalization
 obs_buffer = []
@@ -720,7 +719,7 @@ obs_buffer = np.array(obs_buffer)
 agent.obs_mean = np.mean(obs_buffer, axis=0)
 agent.obs_std = np.std(obs_buffer, axis=0) + 1e-6  # 避免除0
 
-print(&quot;✅ Normalization initialized.&quot;)
+print("✅ Normalization initialized.")
 ```
 2. 中途动态归一化
 在 SAC 内部每收集一批数据就更新 mean/std（类似 running mean）,只需训练前手动运行几步 env.step() + agent.observe() 即可。
@@ -742,25 +741,25 @@ print(&quot;✅ Normalization initialized.&quot;)
 ## 2. 环境设置
 
 在 CityLearn 环境中，每栋建筑不仅有battery储能系统，还额外配置EV battery，RL 智能体的动作空间包括：
-```math
+$$
 a_t = \left[ a_{\text{building battery}},\ a_{\text{EV battery}} \right]
-```
-  其中每个``a_t``都表示充/放电比例；
+$$
+  其中每个$a_t$都表示充/放电比例；
 - EV 的**可用时间窗口**由住宅用户行为数据确定（车辆通常白天离家、夜晚接入电网）；
-- 充电功率受限于``P_{\max}``，同时遵守SoC上下界约束；
+- 充电功率受限于$P_{\max}$，同时遵守SoC上下界约束；
 - 动作经过归一化与裁剪，保证物理可行性。
 
 ## 3. 奖励函数
 
 典型形式为：
-```math
+$$
 r_t = -\alpha C_t - \beta E_t - \gamma P_{\text{peak},t}
-```
+$$
 where
-- ``C_t``：用电成本；
-- ``E_t``：碳排放；
-- ``P_{\text{peak},t}``：峰值功率；
-- ``\alpha, \beta, \gamma``：权重系数。
+- $C_t$：用电成本；
+- $E_t$：碳排放；
+- $P_{\text{peak},t}$：峰值功率；
+- $\alpha, \beta, \gamma$：权重系数。
 通过 V2G，智能体学会在高价时段放电、低价时段充电，从而降低综合成本。
 
 ## 4. 区别
@@ -786,7 +785,7 @@ from citylearn.agents.sac import SAC
 from pathlib import Path
 
 def run_v2g(agent_class, schema, episodes=3, central_agent=False, save_dir=None, **kwargs):
-    print(f&quot;\n=== Running {agent_class.__name__} (Vehicle-to-Grid) ===&quot;)
+    print(f"\n=== Running {agent_class.__name__} (Vehicle-to-Grid) ===")
     # ✅ 启用 include_evs / v2g 参数
     env = CityLearnEnv(schema, central_agent=central_agent, include_evs=True, **kwargs)
     
@@ -795,23 +794,23 @@ def run_v2g(agent_class, schema, episodes=3, central_agent=False, save_dir=None,
     results = env.evaluate()
     env.close()
 
-    print(f&quot;✅ {agent_class.__name__} (V2G) finished.&quot;)
+    print(f"✅ {agent_class.__name__} (V2G) finished.")
     if save_dir:
         Path(save_dir).mkdir(parents=True, exist_ok=True)
-        (Path(save_dir)/&quot;metrics.txt&quot;).write_text(str(results))
+        (Path(save_dir)/"metrics.txt").write_text(str(results))
     return results
 
 def main():
     # ✅ 使用含 EV battery 的 V2G 版本 schema
-    schema_v2g = &quot;data/citylearn_challenge_2022/v2g_schema.json&quot;
+    schema_v2g = "data/citylearn_challenge_2022/v2g_schema.json"
 
     # ✅ 运行 SAC 控制器（Vehicle-to-Grid 实验）
-    res_v2g = run_v2g(SAC, schema_v2g, episodes=5, central_agent=False, save_dir=&quot;results/4_3_v2g_sac&quot;)
+    res_v2g = run_v2g(SAC, schema_v2g, episodes=5, central_agent=False, save_dir="results/4_3_v2g_sac")
 
-    print(&quot;\n=== V2G SAC Results ===&quot;)
+    print("\n=== V2G SAC Results ===")
     print(res_v2g)
 
-if __name__ == &quot;__main__&quot;:
+if __name__ == "__main__":
     main()
 ```
 

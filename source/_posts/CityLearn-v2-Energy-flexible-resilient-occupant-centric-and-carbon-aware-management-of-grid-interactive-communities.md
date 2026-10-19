@@ -33,10 +33,8 @@ v2 版本在体系结构上进行了彻底重构，支持模块化设计和多�
 **DR**：demand response
 
 ## 二. environment
-
+![](/images/citylearn/17613885450058.jpg)
 这是Building model的总体流程图
-![](/wp-content/uploads/2025/10/17613885450058-scaled.jpg)
-
 
 ### 2.1 建筑模型（Building model）
 
@@ -47,31 +45,31 @@ v2 版本在体系结构上进行了彻底重构，支持模块化设计和多�
 
 #### 2.1.1 电能与热能平衡（Electric and thermal energy balance）
 
-建筑在每个时间步 \( t \) 的净能耗由其电力与热力流量平衡关系决定。  
-对任意建筑 \( b \)，电力平衡可表示为：
+建筑在每个时间步 $t$ 的净能耗由其电力与热力流量平衡关系决定。  
+对任意建筑 $b$，电力平衡可表示为：
 
-```math
+$$
 E_{t,b}^{\text{grid}} = E_{t,b}^{\text{load}} - E_{t,b}^{\text{PV}} - E_{t,b}^{\text{discharge}} + E_{t,b}^{\text{charge}}
-```
+$$
 
 其中：
 
-- ``(E_{t,b}^{\text{grid}})``：从电网汲取的净电能；  
-- ``(E_{t,b}^{\text{load}})``：总电力负荷（包括 HVAC、DHW、家电与电动车等）；  
-- ``(E_{t,b}^{\text{PV}})``：光伏系统输出；  
-- ``(E_{t,b}^{\text{discharge}})``、``(E_{t,b}^{\text{charge}})``：分别为储能放电与充电功率。
+- $E_{t,b}^{\text{grid}}$：从电网汲取的净电能；  
+- $E_{t,b}^{\text{load}}$：总电力负荷（包括 HVAC、DHW、家电与电动车等）；  
+- $E_{t,b}^{\text{PV}}$：光伏系统输出；  
+- $E_{t,b}^{\text{discharge}}$、$E_{t,b}^{\text{charge}}$：分别为储能放电与充电功率。
 
 热力系统的能量守恒为：
 
-```math
+$$
 Q_{t+1,b}^{\text{storage}} = Q_{t,b}^{\text{storage}} + \eta_c Q_{t,b}^{\text{charge}} \Delta t - \frac{1}{\eta_d} Q_{t,b}^{\text{discharge}} \Delta t
-```
+$$
 
 能量约束为：
 
-```math
+$$
 Q_{\min} \le Q_{t,b}^{\text{storage}} \le Q_{\max}
-```
+$$
 
 ---
 
@@ -79,18 +77,18 @@ Q_{\min} \le Q_{t,b}^{\text{storage}} \le Q_{\max}
 
 室内温度动态遵循一阶热阻–热容（RC）模型：
 
-```math
+$$
 T_{t+1,b}^{\text{in}} = T_{t,b}^{\text{in}} + \frac{\Delta t}{C_b} \left[ \frac{T_{t,b}^{\text{out}} - T_{t,b}^{\text{in}}}{R_b} + \eta_b^{\text{HVAC}} P_{t,b}^{\text{HVAC}} \right]
-```
+$$
 
 参数定义：
 
-- ``(R_b, C_b)``：建筑热阻与热容；
-- ``(T^{\text{in}})``：室内温度；
-- ``(T^{\text{out}})``：室外温度；
-- ``(\eta_b^{\text{HVAC}})``：HVAC 效率；
-- ``(P_{t,b}^{\text{HVAC}})``：HVAC 功率输入；
-- ``(\Delta t)``：时间步长。
+- $R_b, C_b$：建筑热阻与热容；
+- $T^{\text{in}}$：室内温度；
+- $T^{\text{out}}$：室外温度；
+- $\eta_b^{\text{HVAC}}$：HVAC 效率；
+- $P_{t,b}^{\text{HVAC}}$：HVAC 功率输入；
+- $\Delta t$：时间步长。
 
 ---
 
@@ -98,16 +96,16 @@ T_{t+1,b}^{\text{in}} = T_{t,b}^{\text{in}} + \frac{\Delta t}{C_b} \left[ \frac{
 
 热水储能的动态方程：
 
-```
+$$
 E_{t+1,b}^{\text{DHW}} = E_{t,b}^{\text{DHW}} + \eta_c P_{t,b}^{\text{heat}} \Delta t - \frac{1}{\eta_d} P_{t,b}^{\text{draw}} \Delta t
-```
+$$
 
 其中：
 
-- ``(P_{t,b}^{\text{heat}})``：热水设备功率；
-- ``(P_{t,b}^{\text{draw}})``：用水导致的热能损耗；
-- ``(\eta_c, \eta_d)``：充放热效率；
-- ``(E_{t,b}^{\text{DHW}})``：热水罐储能。
+- $P_{t,b}^{\text{heat}}$：热水设备功率；
+- $P_{t,b}^{\text{draw}}$：用水导致的热能损耗；
+- $\eta_c, \eta_d$：充放热效率；
+- $E_{t,b}^{\text{DHW}}$：热水罐储能。
 
 ---
 
@@ -115,81 +113,81 @@ E_{t+1,b}^{\text{DHW}} = E_{t,b}^{\text{DHW}} + \eta_c P_{t,b}^{\text{heat}} \De
 
 电池能量更新方程：
 
-```math
+$$
 E_{t+1,b}^{\text{bat}} = E_{t,b}^{\text{bat}} + \eta_c P_{t,b}^{\text{ch}} \Delta t - \frac{1}{\eta_d} P_{t,b}^{\text{dis}} \Delta t
-```
+$$
 
 功率约束：
 
-```math
+$$
 0 \le P_{t,b}^{\text{ch}} \le P_{\max}^{\text{ch}}, \quad 0 \le P_{t,b}^{\text{dis}} \le P_{\max}^{\text{dis}}
-```
+$$
 
 ---
 
 #### 2.1.5 光伏发电（Photovoltaic generation）
 
-```math
+$$
 P_{t,b}^{\text{PV}} = A_b^{\text{PV}} \cdot \eta_b^{\text{PV}} \cdot G_t
-```
+$$
 
 其中：
 
-- ``(A_b^{\text{PV}})``：光伏阵列面积；
-- ``(\eta_b^{\text{PV}})``：光伏转换效率；
-- ``(G_t)``：太阳辐照度。
+- $A_b^{\text{PV}}$：光伏阵列面积；
+- $\eta_b^{\text{PV}}$：光伏转换效率；
+- $G_t$：太阳辐照度。
 
 ---
 
 #### 2.1.6 电动车充电（Electric vehicle, EV）
 
-```math
+$$
 E_{t+1,b}^{\text{EV}} = E_{t,b}^{\text{EV}} + \eta_c P_{t,b}^{\text{EV}} \Delta t
-```
+$$
 
 约束条件：
 
-```math
+$$
 E_{\min}^{\text{EV}} \le E_{t,b}^{\text{EV}} \le E_{\max}^{\text{EV}}, \quad 0 \le P_{t,b}^{\text{EV}} \le P_{\max}^{\text{EV}}
-```
+$$
 
 ---
 
 #### 2.1.7 住户交互模型（Occupant interaction model）
 
-```math
+$$
 T_{t,b}^{\text{set,eff}} = T_{t,b}^{\text{set,agent}} + \delta_{t,b}
-```
+$$
 
-- ``(T_{t,b}^{\text{set,agent}})``：智能体设定温度；
-- ``(\delta_{t,b})``：住户偏差（可随机或基于舒适度模型）。
+- $T_{t,b}^{\text{set,agent}}$：智能体设定温度；
+- $\delta_{t,b}$：住户偏差（可随机或基于舒适度模型）。
 
 ---
 
 #### 2.1.8 舒适度约束（Comfort constraints）
 
-```math
+$$
 T_{\min,b} \le T_{t,b}^{\text{in}} \le T_{\max,b}
-```
+$$
 
 惩罚项：
 
-```math
+$$
 r_{t,b}^{\text{comfort}} = -\alpha_b \cdot \max(0, T_{t,b}^{\text{in}} - T_{\max,b}) - \beta_b \cdot \max(0, T_{\min,b} - T_{t,b}^{\text{in}})
-```
+$$
 
 ---
 
 #### 2.1.9 成本与排放（Energy cost and emissions）
 
-```math
+$$
 C_{t,b} = p_t \cdot E_{t,b}^{\text{grid}}, \quad Z_{t,b} = \epsilon_t \cdot E_{t,b}^{\text{grid}}
-```
+$$
 
 其中：
 
-- ``(p_t)``：时变电价；
-- ``(\epsilon_t)``：单位电能碳排放（kgCO₂e/kWh）。
+- $p_t$：时变电价；
+- $\epsilon_t$：单位电能碳排放（kgCO₂e/kWh）。
 
 ---
 
@@ -206,21 +204,21 @@ C_{t,b} = p_t \cdot E_{t,b}^{\text{grid}}, \quad Z_{t,b} = \epsilon_t \cdot E_{t
 
 #### 模型定义
 
-用二值变量 ``o_t`` 表示时间步 ``t`` 的供电状态：
+用二值变量 $o_t$ 表示时间步 $t$ 的供电状态：
 
-```math
+$$
 o_t =
 \begin{cases}
-1, &amp; \text{若发生停电 (power outage)} \\
-0, &amp; \text{若正常供电 (normal operation)}
+1, & \text{若发生停电 (power outage)} \\
+0, & \text{若正常供电 (normal operation)}
 \end{cases}
-```
+$$
 
-当 ``( o_t = 1)`` 时，建筑无法从电网获取电能，因此电网交互项被强制为零：
+当 $o_t = 1$ 时，建筑无法从电网获取电能，因此电网交互项被强制为零：
 
-```math
+$$
 E_{t,b}^{\text{grid}} = 0
-```
+$$
 
 此时，建筑的能量供应必须来自于：
 - 本地储能（电池或热储能）；
@@ -231,17 +229,17 @@ E_{t,b}^{\text{grid}} = 0
 
 在停电状态下，建筑能量平衡更新为：
 
-```math
+$$
 E_{t+1,b}^{\text{storage}} =
 E_{t,b}^{\text{storage}} +
 \eta_c P_{t,b}^{\text{charge}}\Delta t -
 \frac{1}{\eta_d} P_{t,b}^{\text{discharge}}\Delta t
-```
+$$
 
 其中：
 - 储能系统在供电中断期间成为主要能量来源；
 - 动作空间可能受到额外约束（如最大放电功率）；
-- 恢复供电后，系统自动切换回正常模式 ``(o_t = 0)``。
+- 恢复供电后，系统自动切换回正常模式 $o_t = 0$。
 
 ---
 
@@ -258,7 +256,7 @@ CityLearn v2 为停电模型提供韧性相关指标，包括：
 
 ### 2.3 Key performance indicators（KPI）
 就是指标，注意是个最小化指标（越小越好）
-![](/wp-content/uploads/2025/10/17613885450058-scaled.jpg)
+![](/images/citylearn/17615410745340.jpg)
 
 
 ### 2.4 Datasets
@@ -266,7 +264,7 @@ CityLearn v2 为停电模型提供韧性相关指标，包括：
 
 ### 2.5 Environment design workflow
 以EULP dataset为例，给出改框架的具体流程
-![](/wp-content/uploads/2025/10/17615401546467.jpg)
+![](/images/citylearn/17615401546467.jpg)
 **1：数据收集**
 收集建筑元数据（如建筑类型、区域气候区、设备可用性等）
 收集真实或合成的负荷／光伏／天气／电价／碳排放时间序列数据 
