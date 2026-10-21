@@ -10,6 +10,8 @@ tags:
 
 # LLM 算法岗 | 面试常问的 LLM 八股题目汇总
 
+> 整理自博客园 moonout
+
 目录
 
 - 1\. Transformer 与模型架构原理
