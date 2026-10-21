@@ -419,6 +419,63 @@
         ]
       }
     },
+    "https://zqqqqqqj1110.github.io/images/rl-basics/image-20261020140855917.png": {
+      "updatedAt": "2026-10-21T03:30:18.252Z",
+      "dimensions": {
+        "status": "ready",
+        "width": 900,
+        "height": 648
+      },
+      "color": {
+        "status": "ready",
+        "algorithm": "hsla-mean-v1",
+        "size": 64,
+        "hsla": [
+          42.7171,
+          10.4627,
+          94.9348,
+          1
+        ]
+      }
+    },
+    "https://zqqqqqqj1110.github.io/images/rl-basics/image-20261021003826403.png": {
+      "updatedAt": "2026-10-21T03:30:18.244Z",
+      "dimensions": {
+        "status": "ready",
+        "width": 900,
+        "height": 376
+      },
+      "color": {
+        "status": "ready",
+        "algorithm": "hsla-mean-v1",
+        "size": 64,
+        "hsla": [
+          206.202,
+          39.4166,
+          97.1212,
+          1
+        ]
+      }
+    },
+    "https://zqqqqqqj1110.github.io/images/rl-basics/image-20261021013004600.png": {
+      "updatedAt": "2026-10-21T03:30:18.252Z",
+      "dimensions": {
+        "status": "ready",
+        "width": 1486,
+        "height": 778
+      },
+      "color": {
+        "status": "ready",
+        "algorithm": "hsla-mean-v1",
+        "size": 64,
+        "hsla": [
+          151.635,
+          6.8286,
+          94.649,
+          1
+        ]
+      }
+    },
     "https://zqqqqqqj1110.github.io/images/rl/image-20251222151753750.png": {
       "updatedAt": "2026-10-19T10:27:54.403Z",
       "dimensions": {
