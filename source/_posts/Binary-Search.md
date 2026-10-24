@@ -1,6 +1,6 @@
 ---
 title: "Binary Search"
-date: 2025-10-27 13:16:05 +08:00
+date: 2025-10-27 13:16:05
 categories:
   - 算法
 ---

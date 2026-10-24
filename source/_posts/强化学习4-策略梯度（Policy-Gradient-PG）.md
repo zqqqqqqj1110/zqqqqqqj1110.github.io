@@ -1,6 +1,6 @@
 ---
 title: "强化学习4 策略梯度（Policy Gradient, PG）"
-date: 2025-12-20 21:30:12 +08:00
+date: 2025-12-20 21:30:12
 categories:
   - 强化学习
 ---

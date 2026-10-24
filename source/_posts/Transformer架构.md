@@ -1,7 +1,7 @@
 ---
 title: "Transformer架构"
-date: 2026-10-05 16:11:33 +08:00
-updated: 2026-10-19 21:40:19 +08:00
+date: 2026-10-05 16:11:33
+updated: 2026-10-19 21:40:19
 categories:
   - 深度学习
 tags:

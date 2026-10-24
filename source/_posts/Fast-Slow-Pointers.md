@@ -1,6 +1,6 @@
 ---
 title: "Fast & Slow Pointers"
-date: 2025-10-27 13:15:03 +08:00
+date: 2025-10-27 13:15:03
 categories:
   - 算法
 ---

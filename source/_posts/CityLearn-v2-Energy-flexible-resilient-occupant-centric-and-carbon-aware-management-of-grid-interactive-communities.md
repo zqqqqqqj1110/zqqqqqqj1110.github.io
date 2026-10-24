@@ -1,6 +1,6 @@
 ---
 title: "CityLearn v2: Energy-flexible, resilient, occupant-centric, and carbon-aware management of grid-interactive communities"
-date: 2025-10-27 13:26:00 +08:00
+date: 2025-10-27 13:26:00
 categories:
   - CityLearn与能源
 tags:

@@ -1,7 +1,7 @@
 ---
 title: "Scientific Machine Learning Through Physics–Informed"
-date: 2023-11-15 21:56:31 +08:00
-updated: 2023-11-15 21:56:32 +08:00
+date: 2023-11-15 21:56:31
+updated: 2023-11-15 21:56:32
 categories:
   - 科学计算与PINN
 tags:

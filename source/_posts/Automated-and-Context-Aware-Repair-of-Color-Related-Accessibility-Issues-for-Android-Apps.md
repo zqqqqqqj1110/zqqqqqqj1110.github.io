@@ -1,6 +1,6 @@
 ---
 title: "Automated and Context-Aware Repair of Color-Related Accessibility Issues for Android Apps"
-date: 2025-08-05 22:22:06 +08:00
+date: 2025-08-05 22:22:06
 categories:
   - 论文笔记
 ---
