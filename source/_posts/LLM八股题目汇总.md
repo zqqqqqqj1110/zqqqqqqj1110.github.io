@@ -1,5 +1,5 @@
 ---
-title: "LLM 算法岗 | 面试常问的 LLM 八股题目汇总"
+title: "LLM 算法岗 | 面试八股题目汇总"
 date: 2026-10-21 23:57:05
 categories:
   - 面试
@@ -8,30 +8,19 @@ tags:
   - LLM
 ---
 
-# LLM 算法岗 | 面试常问的 LLM 八股题目汇总
+# LLM 算法岗 | 面试八股题目汇总
 
-> 整理自博客园 moonout
+> 第 1 部分题目整理自博客园 moonout
 
 目录
 
 - 1\. Transformer 与模型架构原理
-- 2\. 大模型训练流程与微调技术
-- 3\. 强化学习与人类对齐 (RLHF)
-- 4\. Agent 智能体设计与应用
-- 5\. RAG 检索增强生成
-- 6\. 推理优化、部署与工程化
-- 7\. 多模态与主流模型架构
-- 8\. LLM 相关代码实现 (手撕)
-
-------
-
-目前整理的答案：
-
-- LLM 算法岗 | 八股问答（1）· Transformer 与模型架构原理
-- LLM 算法岗 | 八股问答（2）· 大模型训练流程与微调技术
-- LLM 算法岗 | 八股问答（3）· 强化学习与 RLHF
-- LLM 算法岗 | 八股问答（7）· 多模态与主流模型架构
-- LLM 算法岗 | 八股题目 · 代码手撕 · 题目汇总与解析
+- 2\. GRPO 理论（答案：[GRPO理论](/2026/11/01/GRPO%E7%90%86%E8%AE%BA/)）
+- 3\. Workflow & Agent Harness（答案：[Workflow与Agent Harness](/2026/11/02/Workflow%E4%B8%8EAgent%20Harness/)）
+- 4\. Agent 三大范式（ReAct / Plan-and-Execute / Reflection）（答案：[Agent三大范式与ReAct](/2026/11/02/Agent%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F%E4%B8%8EReAct/)）
+- 5\. RAG 与 BGE-M3（答案：[RAG与BGE-M3](/2026/11/02/RAG%E4%B8%8EBGE-M3/)）
+- 6\. SFT 与 LoRA（答案：[SFT与LoRA](/2026/11/02/SFT%E4%B8%8ELoRA/)）
+- 7\. LLM 相关代码实现（手撕）
 
 ------
 
@@ -42,7 +31,7 @@ tags:
 - Transformer 为什么能替代 RNN？核心优势是什么？
 - 详细介绍 Self-Attention 机制，包括本质、数学解释、具体计算步骤，及时间复杂度。
 - 为什么要用 Multi-Head Attention？切分为多头的作用是什么？
-- 计算 Attention 的 Softmax 之前为什么要除以根号 ？
+- 计算 Attention 的 Softmax 之前为什么要除以根号 $d_k$？
 - 介绍一下 Transformer 的位置编码（Positional Encoding），还了解其他位置编码吗？
 - 介绍 QKV 的计算。如果在 Transformer 中去掉 K，变成 QQV，会有什么问题？（仅考虑编码器内部）
 - Transformer 是 Encoder-Decoder 架构，而 GPT 是 Decoder-only 架构，为什么会演变成这种形式？为什么生成式任务（如 GPT）通常舍弃 Encoder？
@@ -56,110 +45,130 @@ tags:
 - 在 Agent 多轮对话任务中，Attention 的局限性体现在哪些方面？
 - 大模型经常一张显卡放不下。为了解决此问题，有哪些模型并行策略？
 
-### 2. 大模型训练流程与微调技术
+### 2. GRPO 理论
 
-- 详细描述从 txt 文本预处理到 SFT 训练的全流程（包括 Tokenize、Forward、Loss 计算、参数更新）。
-- Pretrain、SFT、RLHF 的区别是什么？（目标、任务定位和解决的问题）
-- Pretrain 和 SFT 在优化目标上的区别是什么？
-- SFT 的核心流程及数据集构建策略是什么？如何保证样本多样性和质量？
-- SFT 的 Loss 是什么？若 Target 有 10 或 100 个 Token，Loss 如何计算？
-- SFT 样本（含 Prompt）与预训练样本在计算 Loss 时的区别？如何屏蔽 Prompt 的 Loss？
-- 手写 SFT 的 loss 计算代码（注意 shift right）。
-- SFT 之后常见的 Post-Training（如 RLHF）有哪些？它们的目的有何区别？
-- 为什么 SFT 之后还要做 RL？为什么偏好对齐不能直接用偏好数据做 SFT，而要用 RL？
+> 答案见：[GRPO理论](/2026/11/01/GRPO%E7%90%86%E8%AE%BA/)
 
-LoRA 相关：
+- 什么是 GRPO？核心思想是什么？
+- GRPO 为什么提出？主要解决 PPO 的什么问题？
+- GRPO 一次完整训练流程是什么？
+- 写出 GRPO 核心目标函数，并解释每项
+- Advantage 怎么计算？
+- 为什么一个 Prompt 要采样多个 Response？
+- GRPO 为什么不需要 Critic？
+- PPO 和 GRPO 核心区别？
+- Importance sampling ratio 是什么，为什么需要？
+- 为什么要 Clip？不 Clip 会怎样？
+- Clipped objective 为什么取 min？
+- KL Divergence 的作用？
+- Reference、Old、Current 三种 Policy 区别？
+- Reward 和 Advantage 有什么区别？为何不直接用 Reward？
+- 同组 Reward 全相同会怎样？
+- Group Size `G` 怎么影响训练？越大越好吗？
+- 为什么除以组内标准差，而不只减均值？
+- GRPO 是 On-policy 还是 Off-policy？
+- GRPO 和 DPO 区别？
+- GRPO 和 SFT 的目标区别？
+- 为什么 GRPO 常用于数学、代码和推理？
+- Sequence-level Reward 怎么作用到 Token？
+- KL 和 Clip 都限更新，有何区别？
+- GRPO 不稳定有哪些原因？
+- Reward Hacking 是什么？为什么发生？
+- 怎么判断 GRPO 训练是否有效？
+- GRPO 和 DAPO 有什么区别？
+- GRPO 和 GSPO 区别？
+- Token 级 Clip 与 Sequence 级优化的争议？
+- Agentic RL 的过程奖励怎么设计？
+- 长 Rollout 影响吞吐，如何优化？
+- 手写简化版 GRPO Loss
 
-- 介绍一下 LoRA 的核心原理。秩 r 的选择会对模型表现产生什么影响？如何选择 rank 值？
-- LoRA 是否只能嵌入 Linear 层？为什么不能插在 LayerNorm 之后？对训练稳定性有什么影响？
-- LoRA 微调推理的时候要挂着 Adaptor 吗？合并 Adapter 权重时有没有遇到梯度爆炸？
-- 具体说说 QLoRA 是怎么降低资源成本的？常见的量化方式有哪些？为什么选 NF4 和 FP16 组合？NF4 的分布拟合逻辑是什么？
-- 训练 LoRA 模型时，如何选择冻结层？依据是什么？
+### 3. Workflow & Agent Harness
 
-其他 LLM 训练相关：
+> 答案见：[Workflow与Agent Harness](/2026/11/02/Workflow%E4%B8%8EAgent%20Harness/)
 
-- Tokenizer 是怎么做的？有哪些实现方式？
-- Embedding 是怎么做的？从 ID 到 Embedding 有哪些实现方式？
-- 控制模型生成多样性的参数有哪些？如何控制？
-- top-k 与 top-p 的区别？除了贪心，还有哪些生成策略？
-- 介绍一下常见的优化算法优缺点。为什么 Adam 不一定最优而 SGD 最优？怎么理解分析？
-- 在机器学习里，怎么处理长尾数据和多峰数据？
-- 怎么解决模型的冷启动问题（新模型或新系统上线时缺乏历史数据，导致无法提供有效服务，常见于推荐系统、对话系统等）？LLM 在冷启动方面能够起到什么作用（直接加 prompt）？
-- 大模型幻觉是什么？怎么缓解大模型幻觉？
+- Workflow 是什么？和直接调用一次 LLM 有什么区别？
+- Workflow 与自主 Agent 有什么区别？
+- 常见 Workflow 编排模式有哪些？
+- 怎么设计多步骤 Workflow？如何定义节点之间的输入输出？
+- Workflow 为什么需要状态管理？State、Memory、Checkpoint 如何区分？
+- 节点失败后如何重试和恢复？
+- 如何避免上游错误传递到下游？
+- Workflow 如何控制延迟、成本和吞吐？
+- 如何评测 Workflow 效果？
+- 什么是 Agent Harness？其核心组成是什么？
+- Workflow、Agent、Harness 三者是什么关系？
+- 结合项目：为什么选择 Workflow，而不是让自主 Agent 自行规划全流程？
+- 结合项目：四个处理阶段如何串联？某一阶段出错怎么办？
+- 面试官问“为什么用 Workflow 而不是 Harness”，如何纠正并回答？
+- 什么时候会从 Workflow 逐步增加 Agent 自主性或 Harness 能力？
 
-### 3. 强化学习与人类对齐 (RLHF)
+### 4. Agent 三大范式（ReAct / Plan-and-Execute / Reflection）
 
-- 介绍一下 PPO、DPO、GRPO 的定义、结构区别、优缺点及适用场景。
-- PPO 的 Clip 机制是什么？为什么公式里面 Clip 了外面还要计算一次 Mean？
-- Clip 可以限制分布差异，还有哪些方法可以做到？
-- PPO 和 GRPO 的结构区别，各自适用场景？
-- DAPO、GSPO 具体做了什么改进？
-- 介绍一下奖励函数的坍缩现象和问题。
-- 多目标优化奖励函数冲突怎么处理？
-- 离线强化学习和在线强化学习有什么区别？RLHF 属于哪一种？
-- 为什么要用 Reference Model？为了解决什么问题？
-- KL 散度公式是什么？有几种估计方法？
+> 答案见：[Agent三大范式与ReAct](/2026/11/02/Agent%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F%E4%B8%8EReAct/)
 
-### 4. Agent 智能体设计与应用
+- 什么是 ReAct？核心思想和完整循环是什么？
+- ReAct 的 Thought、Action、Observation 各代表什么？
+- ReAct 与 CoT（Chain-of-Thought）有什么区别？
+- ReAct 与普通 Function Calling 有什么关系和区别？
+- ReAct 如何决定调用什么工具？工具结果如何参与下一步决策？
+- ReAct 什么时候停止？怎样避免死循环、重复工具调用和成本失控？
+- 如果工具调用失败、超时或返回错误数据，ReAct 应如何处理？
+- ReAct 的优缺点是什么？哪些业务适合/不适合？
+- ReAct 如何降低幻觉？为什么不能说它能消除幻觉？
+- 什么是 Plan-and-Execute？与 ReAct 有什么区别？
+- 什么是 Reflection（反思/自检）？它与 ReAct 如何配合？
+- ReAct、Plan-and-Execute、Reflection 如何选型？能否组合？
+- 你的文档处理项目为什么在局部节点使用 ReAct，而不是纯规则工具路由？
+- 既然用了 ReAct，为什么整个系统还要用 Workflow，而不全交给自主 Agent？
+- 如果 ReAct 选错了解析工具或产生错误输出，你如何定位、兜底并评测？
 
-- 做 Agent 有哪些框架（如 AutoGen、LangChain）？开发范式有哪些？什么情况下应该选择某个框架？
-- 在 Agent 多轮对话任务中，Attention 的局限性体现在哪些方面？
-- 怎么设计 Agent 的记忆系统？长期记忆如何存储？
-- 如果历史记录量非常大，怎么优化查询效率？如何做记忆衰退，避免旧数据干扰新任务？
-- Agent 是如何实现多步规划（Multi-step Planning）的？
-- 工具调用的调度策略如何设计？是否有异常 Fallback 策略？
-- 如何让多个 Agent 协同工作的？举个具体的协同机制例子。
-- 如果一个 Agent 误判导致策略冲突，如何处理？
-- Agent 评估体系包括哪些维度？如何衡量 Planning 能力 vs Hallucination Rate？
-- 高并发查询的 Agent 系统中，如何优化召回和生成阶段的延迟？
-- Prompt 自动推荐模块用了哪些优化策略？有没有尝试过 Prompt 压缩或 Embedding 表示的方式？
-- 如果要做电商 Agent，应该选择哪些模态的信息作为输入（文本评论、图像、视频、购买记录等）？
+### 5. RAG 与 BGE-M3
 
-### 5. RAG 检索增强生成
+> 答案见：[RAG与BGE-M3](/2026/11/02/RAG%E4%B8%8EBGE-M3/)
 
-- 什么是 RAG？完整流程是什么？它是怎么提升生成质量的？
-- 标准 RAG 有什么问题？当前 RAG 的最大瓶颈在哪？
-- RAG 与传统“检索 + 模型生成”的流程有何不同？
-- 如何评估一个 RAG 系统是否 Work？有哪些具体的指标或框架？
-- 构建向量检索库时，如何处理时间衰减对召回的影响？
-- 从数据清洗到检索服务上线的完整链路是怎么搭的？Chunk 切分的具体策略是什么？
-- 知识库搭建需要动态更新时，是用全量嵌入还是增量处理？如何避免新旧文档分布不一致导致的检索偏差？
-- 在 RAG+ 知识图谱的 Agent 系统中，知识图谱更新的机制是怎样的？怎样保证实时性？
-- 把 RAG 做成 Agent 有什么好处？
-- Embedding 模型和 Rerank 模型分别是怎么处理文本语料的？用场景举一下例子。
+- 什么是 RAG？为什么需要它？
+- 请描述一个完整的 RAG 流程。
+- RAG 与微调（Fine-tuning）有什么区别？
+- 什么是 Embedding？向量检索如何工作？
+- 为什么要 Chunking？Chunk 太大或太小有什么问题？
+- Top-K 是什么？K 越大越好吗？
+- Dense、Sparse 和 Hybrid Retrieval 有什么区别？
+- 召回（Retrieval）和重排（Rerank）有什么区别？
+- RAG 出现幻觉的原因有哪些？如何缓解？
+- RAG 应该怎么评估？
+- RAG 中的 Query Rewrite / Multi-query 有什么作用？
+- 如果知识库没有相关信息，RAG 应该怎么办？
+- BGE-M3 是什么？M3 指什么？
+- BGE-M3 的三种检索模式分别是什么？
+- BGE-M3 和传统 BM25 有什么区别？
+- 用了 BGE-M3，还需要 Reranker 吗？
+- 你的多阶段文档处理 Workflow 如果要引入 RAG，会怎么设计？
+- 如果面试官问“为什么选 BGE-M3，而不是普通 Embedding 模型？”
 
-### 6. 推理优化、部署与工程化
+### 6. SFT 与 LoRA
 
-- 分析 Transformer 训练过程中的显存占用和计算复杂度。
-- KV Cache 是什么？为什么能极大地提升推理速度？
-- 在 multi-query attention 优化中，decoder 延迟高的瓶颈可能是什么？vLLM 的 KV cache 是否会成为负担？
-- 训练过程中怎么去做到对激活值的显存占用控制？有什么参数可以进行控制？（如 Gradient Checkpointing）
-- 是否了解 Swift？DeepSpeed 与 Megatron 的区别是什么？
-- 有没有做过模型压缩？比如在车载端或低端设备上的推理加速？
-- 如果量化后理解能力下降怎么办？怎么做精度补偿？
-- 在高并发查询 Agent 系统中，你会如何优化召回和生成阶段的延迟？
-- 大规模 Agent 系统在多线程 / 多进程场景下的资源调度策略如何设计？
-- 如果你要在 GPU 资源有限的条件下同时提供推理和微调服务，如何做资源分配和任务调度以保证时延和吞吐？
-- 场景题：假如一个 Agent 推理链路包含 3 个工具 + 高频请求，系统整体延迟较高，你会如何优化？
-- 部署一个 MoE 架构的 235B 模型，所需要的算力大概是多少？参数量与硬件需求关系是什么？
+> 答案见：[SFT与LoRA](/2026/11/02/SFT%E4%B8%8ELoRA/)
 
-### 7. 多模态与主流模型架构
+- 什么是 SFT？与预训练有什么区别？
+- 从原始数据到 SFT 参数更新的完整流程是什么？
+- SFT 的损失函数是什么？为什么是交叉熵？
+- Teacher Forcing 是什么？训练与推理有什么区别？
+- SFT 中 Prompt 部分是否计算 Loss？如何 Mask？
+- SFT 数据质量为什么重要？如何构造和清洗？
+- 如何评估 SFT 是否有效？训练 Loss 下降够吗？
+- 什么是 LoRA？为什么能减少微调成本？
+- 请写出 LoRA 的核心公式并解释维度。
+- LoRA 可训练参数量怎么算？举例。
+- 为什么低秩分解能起作用？LoRA 的局限性是什么？
+- LoRA 的 r、alpha、dropout、target_modules 分别是什么？
+- LoRA 为什么常初始化为 A 随机、B 为零？
+- LoRA 和全参数微调有什么区别？推理时能否 Merge？
+- SFT 和 LoRA 是什么关系？可以同时用吗？
+- LoRA 和 QLoRA 的区别是什么？
+- SFT 和 DPO、GRPO 有什么区别？
+- 如果项目需要小样本定制能力，你会如何选择 SFT + LoRA？
 
-- 主流的开源大模型结构有哪些？讲讲 Qwen2.5VL、Llama 等模型及其核心特征。它们如何进行微调和训练？
-- 多模态大模型一般有哪几个组件？什么作用？
-- 视觉跟文本之间的对齐任务是怎么做的？
-- CLIP 框架描述。CLIP 的文本编码器和图像编码器都是什么？它们分别如何提取特征？
-- ViT 的结构是什么？
-- SAM 有哪几个组件？用的什么指标评价？模型性能横向相比大概什么水平？
+### 7. LLM 相关代码实现（手撕）
 
-### 8. LLM 相关代码实现 (手撕)
-
-- 写 top-p 和 top-k。
-- 写 LayerNorm 和 RMSNorm。
-- 用 Torch 写 SFT 的 Loss 计算代码（注意 Shift Right）。
-- 手撕交叉熵、Softmax 实现。
-- 介绍一下 QKV 的计算代码实现、手撕 Self-Attention、手撕 Multi-Head Attention (MHA)。
-- 写 RoPE。
-- 写 PPO DPO GRPO 的 loss function。
-- 写 PPO 伪代码、PPO 的 GAE。
-- 写 ReAct 伪代码，并添加 tool call。
+- Multi-Head Attention（待补充）
+- GRPO（待补充）
