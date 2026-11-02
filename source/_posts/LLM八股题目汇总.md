@@ -1,6 +1,7 @@
 ---
 title: "算法岗八股题目导览"
 description: "大模型算法岗面试八股导航：Transformer、GRPO、Workflow & Agent Harness、Agent 范式、RAG 与 BGE-M3、SFT 与 LoRA，以及手撕代码，每块附答案链接。"
+cover: /images/guide-cover.png
 listing:
   priority: 1
 date: 2026-10-21 23:57:05
