@@ -45,7 +45,7 @@ tags:
 ## 二、标准答案（面试口述版 + 追问）
 
 ### 1. 什么是 ReAct？核心思想和完整循环是什么？
-**面试口述版：** ReAct 是 Reasoning + Acting 的缩写，是将模型的决策推理与外部工具行动交替组织的 Agent 范式。模型根据用户目标和已有观察选择下一步动作，执行工具后把 Observation 回填上下文，再继续判断，直到能回答或满足停止条件。它的价值是让模型不只凭内部知识生成，而能通过外部工具获取证据并动态调整行为。
+**面试口述版：** ReAct 是 Reasoning + Acting 的缩写。本质就是让大模型一边思考，一边调用工具，根据工具返回的结果决定下一步怎么做
 
 **核心流程：** 用户目标 → 判断下一步（Thought/决策）→ 工具调用（Action）→ 工具结果（Observation）→ 下一轮决策 → Final Answer。
 
@@ -63,6 +63,8 @@ tags:
 
 ### 4. ReAct 与 Function Calling 有什么区别？
 **面试口述版：** Function Calling 是模型以结构化参数请求调用工具的机制；ReAct 是围绕目标进行多轮决策与行动的执行范式。Function Calling 可以成为 ReAct 的 Action 实现方式，但单次 Function Calling 不等于完整的 ReAct 循环。
+
+**Function Calling 负责“调用工具”，ReAct 负责“决定什么时候调用工具、调用什么工具，以及调用完后下一步做什么”。**
 
 **易错点：** 不要说“用 Function Calling 就一定是 ReAct”。
 
