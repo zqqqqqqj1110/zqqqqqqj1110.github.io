@@ -87,6 +87,19 @@ tags:
 - 长 Rollout 影响吞吐，如何优化？
 - 手写简化版 GRPO Loss
 
+**模拟面试 10 题（结合文档解析 Agent）**
+
+- GRPO 与 PPO 有何区别？
+- GRPO 的组内优势函数如何计算？
+- 为什么需要 Clip？
+- 如何设计 Agent 的奖励函数？
+- 组内奖励全部相同怎么办？
+- SFT 与 GRPO 有何区别？
+- 什么是 Reward Hacking？
+- KL 散度与 Clip 的关系是什么？
+- 一次 GRPO 训练迭代如何进行？
+- 如何将 GRPO 应用到文档解析 Agent？
+
 ### 3. Workflow & Agent Harness
 
 > 答案见：[Workflow与Agent Harness](/2026/11/02/Workflow%E4%B8%8EAgent%20Harness/)
