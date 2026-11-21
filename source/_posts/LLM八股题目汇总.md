@@ -1,6 +1,6 @@
 ---
 title: "算法岗八股题目导览"
-description: "大模型算法岗面试八股导航：Transformer、GRPO、Workflow & Agent Harness、Agent 范式、RAG 与 BGE-M3、SFT 与 LoRA，手撕代码，以及谷歌实习项目，每块附答案链接。"
+description: "大模型算法岗面试八股导航：Transformer、GRPO、Workflow & Agent Harness、Agent 范式、RAG 与 BGE-M3、SFT 与 LoRA，手撕代码，以及项目（谷歌实习、RateYourDJ），每块附答案链接。"
 cover: /images/guide-cover.png
 listing:
   priority: 1
@@ -25,7 +25,7 @@ tags:
 - 5\. RAG 与 BGE-M3（答案：[RAG与BGE-M3](/2026/11/02/RAG%E4%B8%8EBGE-M3/)）
 - 6\. SFT 与 LoRA（答案：[SFT与LoRA](/2026/11/02/SFT%E4%B8%8ELoRA/)）
 - 7\. LLM 相关代码实现（手撕）
-- 8\. 项目（[谷歌](/2026/11/21/%E8%B0%B7%E6%AD%8C/)）
+- 8\. 项目（[谷歌](/2026/11/21/%E8%B0%B7%E6%AD%8C/)、[RateYourDJ](/2026/11/21/RateYourDJ/)）
 
 ------
 
@@ -193,4 +193,5 @@ tags:
 
 ### 8. 项目
 
-> 谷歌实习项目：[谷歌](/2026/11/21/%E8%B0%B7%E6%AD%8C/)
+- 谷歌实习项目：[谷歌](/2026/11/21/%E8%B0%B7%E6%AD%8C/)
+- RateYourDJ：[RateYourDJ](/2026/11/21/RateYourDJ/)
