@@ -18,7 +18,7 @@ tags:
 
 目录
 
-- 1\. Transformer 与模型架构原理
+- 1\. Transformer 与模型架构原理（答案：[Transformer与模型架构原理](/2026/11/25/Transformer%E4%B8%8E%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/)；结构笔记：[Transformer架构](/2026/10/05/Transformer%E6%9E%B6%E6%9E%84/)）
 - 2\. GRPO 理论（答案：[GRPO理论](/2026/11/01/GRPO%E7%90%86%E8%AE%BA/)）
 - 3\. Workflow & Agent Harness（答案：[Workflow与Agent Harness](/2026/11/02/Workflow%E4%B8%8EAgent%20Harness/)）
 - 4\. Agent 三大范式（ReAct / Plan-and-Execute / Reflection）（答案：[Agent三大范式与ReAct](/2026/11/02/Agent%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F%E4%B8%8EReAct/)）
@@ -30,6 +30,8 @@ tags:
 ------
 
 ### 1. Transformer 与模型架构原理
+
+> 答案见：[Transformer与模型架构原理](/2026/11/25/Transformer%E4%B8%8E%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/)；配套结构笔记：[Transformer架构](/2026/10/05/Transformer%E6%9E%B6%E6%9E%84/)
 
 - 请介绍 Transformer 的结构组成、各部分作用及底层原理。
 - Transformer 的 forward 计算包含哪些部件？非线性由什么提供？
